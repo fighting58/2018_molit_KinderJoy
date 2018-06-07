@@ -7,9 +7,13 @@
 """
 from simpledbf import Dbf5
 import pandas as pd
+import os
+import os.path
 import matplotlib.pyplot as plt
 
 resultfolder = '../Result/'
+if not os.path.exists(resultfolder):
+    os.mkdir(resultfolder)
 
 # 최종 shp파일 중 dbf파일을 이용
 dbf = Dbf5("./SpeedByLocal.dbf", codec='utf-8')
