@@ -9,6 +9,8 @@ from simpledbf import Dbf5
 import pandas as pd
 import matplotlib.pyplot as plt
 
+resultfolder = '../Result/'
+
 # 최종 shp파일 중 dbf파일을 이용
 dbf = Dbf5("./SpeedByLocal.dbf", codec='utf-8')
 df_dbf = dbf.to_dataframe()
@@ -37,29 +39,32 @@ speed_std.columns = ['Std', 'Location']
 fig = plt.figure()
 # 각 지역별 표준편차 분포 그래프
 ax1 = fig.add_subplot(2, 1, 1)
-ax1.plot(speed_std.Location, speed_std.Std, label='Standard Deviation', c='r')
+ax1.plot(speed_std.Location, speed_std.Std, label='Standard Deviation', c='r', lw=1)
 ax1.legend()
 ax1.set_ylabel('Standard Deviation')
+plt.tick_params(axis='x', labelsize=5, rotation=90)
 
 # 각 지역별 Speed 분포 그래프
 ax2 = fig.add_subplot(2, 1, 2)
 ax2.get_xaxis().set_ticks([])
-ax2.scatter(x='Location', y='Speed', data=df_dbf, label='Speed', alpha=0.15, c='k')
+ax2.scatter(x='Location', y='Speed', data=df_dbf, label='Speed', alpha=0.15, c='k', s=5)
 ax2.set_ylabel('Speed')
 ax2.legend()
 ax2.set_ylim(0, 120)
-
+plt.tick_params(axis='x', labelsize=5, rotation=90)
 # 각 지역별 평균 그래프
 # 평균 그래프는 speed분포와 중첩
 ax3 = ax2.twinx()
-ax3.plot(speed_mean.Location, speed_mean.Mean, label='Mean', c='b')
+ax3.plot(speed_mean.Location, speed_mean.Mean, label='Mean', c='b', lw=1)
 ax3.set_ylabel('Mean')
+
 ax3.legend()
 ax3.set_ylim(0, 120)
 
-# 그래프를 pdf파일로 저장
-plt.savefig('Visualize.pdf')
-plt.savefig('Visualize.jpg')
+# 그래프를 pdf / jpg파일로 저장
+
+plt.savefig(resultfolder + 'Visualize.pdf')
+plt.savefig(resultfolder + 'Visualize.jpg')
 plt.show()
 
 df = pd.merge(speed_mean, speed_std, how='left')
