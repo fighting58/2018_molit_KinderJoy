@@ -59,6 +59,7 @@ ax3.set_ylim(0, 120)
 
 # 그래프를 pdf파일로 저장
 plt.savefig('Visualize.pdf')
+plt.savefig('Visualize.jpg')
 plt.show()
 
 df = pd.merge(speed_mean, speed_std, how='left')
